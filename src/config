@@ -4,3 +4,5 @@ tankSpeed=5
 bulletSpeed=10
 gameWidth=1000
 gameHeight=720
+goodFS=com.wzl.strategy.FourDirectionFireStrategy
+badFS=com.wzl.strategy.DefaultFireStrategy

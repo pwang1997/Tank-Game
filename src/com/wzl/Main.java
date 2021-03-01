@@ -1,7 +1,9 @@
 package com.wzl;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
         TankFrame tf = new TankFrame();
 
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));

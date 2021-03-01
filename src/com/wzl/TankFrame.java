@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class TankFrame extends Frame{
     static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
 
     Tank myTank = new Tank(GAME_WIDTH / 2, GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD, this);
-    List<Tank> enemy = new ArrayList<>();
-    List<Bullet> bulletList = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    public List<Tank> enemy = new ArrayList<>();
+    public List<Bullet> bulletList = new ArrayList<>();
+    public List<Explode> explodes = new ArrayList<>();
 
 //    Explode e = new Explode(100, 100, this);
 
-    public TankFrame() {
+    public TankFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank war");
