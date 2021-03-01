@@ -3,9 +3,9 @@ package com.wzl;
 import java.awt.*;
 
 public class Explode {
-        static final int WIDTH = ResourceMgr.explodes[0].getWidth();
+        static final int WIDTH = ResourceMgr.INSTANCE.getExplodes()[0].getWidth();
 
-        static final int HEIGHT = ResourceMgr.explodes[0].getHeight();
+        static final int HEIGHT = ResourceMgr.INSTANCE.getExplodes()[0].getHeight();
 
         private int x, y;
         private int step = 0;
@@ -24,7 +24,7 @@ public class Explode {
     }
 
     public void paint(Graphics g) {
-        if(step < 16) g.drawImage(ResourceMgr.explodes[step++], x, y, null);
+        if(step < 16) g.drawImage(ResourceMgr.INSTANCE.getExplodes()[step++], x, y, null);
         else {
             tf.explodes.remove(this);
             return;

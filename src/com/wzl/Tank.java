@@ -6,8 +6,8 @@ import java.util.Random;
 public class Tank {
 
     static final int SPEED = Integer.parseInt((String) PropertyMgr.get("tankSpeed"));
-    static final int WIDTH = ResourceMgr.goodtankL.getWidth();
-    static final int HEIGHT = ResourceMgr.goodtankL.getHeight();
+    static final int WIDTH = ResourceMgr.INSTANCE.getBadtankL().getWidth();
+    static final int HEIGHT = ResourceMgr.INSTANCE.getBadtankL().getHeight();
 
     private int x, y;
     private Dir dir;
@@ -53,20 +53,20 @@ public class Tank {
         }
         switch(dir) {
             case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodtankL :
-                        ResourceMgr.badtankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodtankL() :
+                        ResourceMgr.INSTANCE.getBadtankL(), x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodtankR :
-                        ResourceMgr.badtankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodtankR() :
+                        ResourceMgr.INSTANCE.getBadtankR(), x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodtankU :
-                        ResourceMgr.badtankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodtankU() :
+                        ResourceMgr.INSTANCE.getBadtankU(), x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodtankD :
-                        ResourceMgr.badtankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodtankD() :
+                        ResourceMgr.INSTANCE.getBadtankD(), x, y, null);
                 break;
         }
         if(random.nextInt(100) > 95 && this.group == Group.BAD) {

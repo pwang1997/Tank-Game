@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Bullet {
     private static final int SPEED = Integer.parseInt((String) PropertyMgr.get("bulletSpeed"));
-    public static final int HEIGHT = ResourceMgr.bulletD.getHeight();
-    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static final int HEIGHT = ResourceMgr.INSTANCE.getBulletD().getHeight();
+    public static final int WIDTH = ResourceMgr.INSTANCE.getBulletD().getWidth();
 
     private int x, y;
     private Dir dir;
@@ -31,16 +31,16 @@ public class Bullet {
 
         switch(dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletL(), x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletR(), x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletU(), x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletD(), x, y, null);
                 break;
         }
         move();
