@@ -1,68 +1,29 @@
-package com.wzl;
+package com.wzl.tank;
 
-import com.wzl.strategy.DefaultFireStrategy;
+import com.wzl.abstractfactory.BaseTank;
 import com.wzl.strategy.FireStrategy;
-import com.wzl.strategy.FourDirectionFireStrategy;
 
 import java.awt.*;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 
-public class Tank {
+public class Tank extends BaseTank {
 
     public static final int SPEED = Integer.parseInt((String) PropertyMgr.get("tankSpeed"));
     public static final int WIDTH = ResourceMgr.INSTANCE.getBadtankL().getWidth();
     public static final int HEIGHT = ResourceMgr.INSTANCE.getBadtankL().getHeight();
+    public Rectangle rect;
+//    public TankFrame tf;
+//    FireStrategy fs;
 
-    private int x, y;
-    private Dir dir;
-    boolean alive = true;
-    boolean moving = true;
-    Rectangle rect;
-    public Group group;
-    Random random = new Random();
-    public TankFrame tf;
 
-    FireStrategy fs;
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        super(x, y, dir, group, tf);
+        this.rect = new Rectangle(x, y, WIDTH, HEIGHT);
 
+    }
 
     public Rectangle getRect() {
         return rect;
-    }
-
-    public static int getWIDTH() {
-        return WIDTH;
-    }
-
-    public static int getHEIGHT() {
-        return HEIGHT;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        super();
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.tf = tf;
-        this.group = group;
-        this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-
-        if(this.group == Group.GOOD) {
-            String goodFSName = (String) PropertyMgr.get("goodFS");
-            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
-            constructor.setAccessible(true);
-            fs = constructor.newInstance();
-        } else {
-            String goodFSName = (String) PropertyMgr.get("badFS");
-            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
-            constructor.setAccessible(true);
-            fs = constructor.newInstance();
-        }
     }
 
     public void paint(Graphics g) {
@@ -105,14 +66,6 @@ public class Tank {
 
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public void fire() {
         fs.fire(this);
     }
@@ -139,13 +92,6 @@ public class Tank {
         }
     }
 
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
 
     public void die() {
         this.alive = false;
@@ -160,9 +106,5 @@ public class Tank {
         if (y < HEIGHT) y = HEIGHT;
         if (TankFrame.GAME_WIDTH - x - Tank.WIDTH < 2) x = TankFrame.GAME_WIDTH - (Tank.WIDTH + 2);
         if (TankFrame.GAME_HEIGHT - Tank.HEIGHT - y < 2) y = TankFrame.GAME_HEIGHT - (Tank.HEIGHT + 2);
-    }
-
-    public Dir getDir() {
-        return dir;
     }
 }

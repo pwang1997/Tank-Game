@@ -1,4 +1,4 @@
-package com.wzl;
+package com.wzl.tank;
 
 import java.io.IOException;
 import java.util.Properties;

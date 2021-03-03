@@ -1,6 +1,10 @@
 package com.wzl.strategy;
 
-import com.wzl.*;
+import com.wzl.abstractfactory.BaseTank;
+import com.wzl.tank.Audio;
+import com.wzl.tank.Bullet;
+import com.wzl.tank.Group;
+import com.wzl.tank.Tank;
 
 public class DefaultFireStrategy implements FireStrategy {
 
@@ -8,12 +12,12 @@ public class DefaultFireStrategy implements FireStrategy {
 
     private DefaultFireStrategy(){};
 
-    public static DefaultFireStrategy getInstance(Tank t) {
+    public static DefaultFireStrategy getInstance(BaseTank t) {
         return INSTANCE;
     }
 
     @Override
-    public void fire(Tank t) {
+    public void fire(BaseTank t) {
         int bx = t.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 

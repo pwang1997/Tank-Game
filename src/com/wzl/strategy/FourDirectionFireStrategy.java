@@ -1,6 +1,7 @@
 package com.wzl.strategy;
 
-import com.wzl.*;
+import com.wzl.abstractfactory.BaseTank;
+import com.wzl.tank.*;
 
 public class FourDirectionFireStrategy implements FireStrategy {
 
@@ -8,19 +9,19 @@ public class FourDirectionFireStrategy implements FireStrategy {
 
     private FourDirectionFireStrategy(){};
 
-    public static FourDirectionFireStrategy getInstance(Tank t) {
+    public static FourDirectionFireStrategy getInstance(BaseTank t) {
         return INSTANCE;
     }
 
     @Override
-    public void fire(Tank t) {
+    public void fire(BaseTank t) {
         int bx = t.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
         Dir[] dirs = Dir.values();
         for(Dir dir : dirs) {
-//            new Bullet(bx, by, t.getDir(), t.group, t.tf);
-            t.tf.bulletList.add(new Bullet(bx, by, dir, t.group, t.tf));
+//            t.tf.bulletList.add(new Bullet(bx, by, dir, t.group, t.tf));
+            t.tf.bulletList.add(t.tf.rf.createBullet(bx, by, dir, t.group, t.tf ));
         }
 
         if(t.group == Group.GOOD)

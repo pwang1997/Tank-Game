@@ -1,4 +1,4 @@
-package com.wzl;
+package com.wzl.tank;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

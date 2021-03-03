@@ -1,4 +1,6 @@
-package com.wzl;
+package com.wzl.tank;
+
+import com.wzl.abstractfactory.*;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -11,15 +13,19 @@ import java.util.List;
 
 public class TankFrame extends Frame{
 
-    static final int GAME_WIDTH = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
-    static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
+    public static final int GAME_WIDTH = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
+    public static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
 
-    Tank myTank = new Tank(GAME_WIDTH / 2, GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD, this);
-    public List<Tank> enemy = new ArrayList<>();
-    public List<Bullet> bulletList = new ArrayList<>();
-    public List<Explode> explodes = new ArrayList<>();
+    public GameFactory df = new DefaultFactory();
+    public GameFactory rf = new RectFactory(); // change in bullet/collideWith
 
-//    Explode e = new Explode(100, 100, this);
+//    Tank myTank = new Tank(GAME_WIDTH / 2, GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD, this);
+    BaseTank myTank = rf.createTank(GAME_WIDTH / 2, GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD, this);
+
+    public List<BaseTank> enemy = new ArrayList<>();
+    public List<BaseBullet> bulletList = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList<>();
+
 
     public TankFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

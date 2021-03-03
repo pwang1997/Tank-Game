@@ -1,8 +1,10 @@
-package com.wzl;
+package com.wzl.abstractfactory;
+
+import com.wzl.tank.*;
 
 import java.awt.*;
 
-public class Bullet {
+public class RectBullet extends BaseBullet{
     private static final int SPEED = Integer.parseInt((String) PropertyMgr.get("bulletSpeed"));
     public static final int HEIGHT = ResourceMgr.INSTANCE.getBulletD().getHeight();
     public static final int WIDTH = ResourceMgr.INSTANCE.getBulletD().getWidth();
@@ -14,7 +16,7 @@ public class Bullet {
     Group group;
     Rectangle rect;
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -28,21 +30,10 @@ public class Bullet {
             tf.bulletList.remove(this);
             return;
         }
-
-        switch(dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletL(), x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletR(), x, y, null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletU(), x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletD(), x, y, null);
-                break;
-        }
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.fillRect(x, y, 20, 20);
+        g.setColor(c);
         move();
         rect.x = this.x;
         rect.y = this.y;
@@ -71,7 +62,7 @@ public class Bullet {
         }
     }
 
-    public void collideWith(Tank tank) {
+    public void collideWith(BaseTank tank) {
         if(this.group == tank.getGroup()) return;
 
         if(this.rect.intersects(tank.getRect())) {
@@ -79,7 +70,7 @@ public class Bullet {
             this.die();
             int eX = tank.getX() + tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = tank.getY() + tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            tf.explodes.add(new Explode(eX, eY, tf));
+            tf.explodes.add(tf.rf.createExplode(eX,eY,tf));
         }
     }
 
