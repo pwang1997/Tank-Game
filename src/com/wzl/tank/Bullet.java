@@ -5,7 +5,7 @@ import com.wzl.abstractfactory.BaseTank;
 
 import java.awt.*;
 
-public class Bullet extends BaseBullet {
+public class Bullet extends GameObject {
     private static final int SPEED = Integer.parseInt((String) PropertyMgr.get("bulletSpeed"));
     public static final int HEIGHT = ResourceMgr.INSTANCE.getBulletD().getHeight();
     public static final int WIDTH = ResourceMgr.INSTANCE.getBulletD().getWidth();
@@ -28,7 +28,7 @@ public class Bullet extends BaseBullet {
 
     public void paint(Graphics g) {
         if(!alive) {
-            gm.bulletList.remove(this);
+            gm.remove(this);
             return;
         }
 
@@ -74,15 +74,15 @@ public class Bullet extends BaseBullet {
         }
     }
 
-    public void collideWith(BaseTank tank) {
-        if(this.group == tank.getGroup()) return;
+    public void collideWith(Tank tank) {
+        if(this.group == tank.group) return;
 
         if(this.rect.intersects(tank.getRect())) {
             tank.die();
             this.die();
-            int eX = tank.getX() + tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY = tank.getY() + tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            gm.explodes.add(gm.gf.createExplode(eX,eY,gm));
+            int eX = tank.x + tank.WIDTH / 2 - Explode.WIDTH / 2;
+            int eY = tank.y + tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            gm.add(new Explode(eX,eY,gm));
         }
     }
 

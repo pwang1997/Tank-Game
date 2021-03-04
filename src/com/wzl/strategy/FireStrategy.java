@@ -5,6 +5,6 @@ import com.wzl.abstractfactory.RectTank;
 import com.wzl.tank.Tank;
 
 public interface FireStrategy {
-    void fire(BaseTank t);
+    void fire(Tank t);
 
 }

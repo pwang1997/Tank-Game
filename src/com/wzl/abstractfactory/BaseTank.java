@@ -42,24 +42,6 @@ public abstract class BaseTank {
             constructor.setAccessible(true);
             fs = constructor.newInstance();
         }
-    }{
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.tf = tf;
-        this.group = group;
-        this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        if(this.group == Group.GOOD) {
-            String goodFSName = (String) PropertyMgr.get("goodFS");
-            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
-            constructor.setAccessible(true);
-            this.fs = constructor.newInstance();
-        } else {
-            String goodFSName = (String) PropertyMgr.get("badFS");
-            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
-            constructor.setAccessible(true);
-            this.fs = constructor.newInstance();
-        }
     }
 
 

@@ -4,18 +4,45 @@ import com.wzl.abstractfactory.BaseTank;
 import com.wzl.strategy.FireStrategy;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 
-public class Tank extends BaseTank {
+public class Tank extends GameObject {
 
     public static final int SPEED = Integer.parseInt((String) PropertyMgr.get("tankSpeed"));
     public static final int WIDTH = ResourceMgr.INSTANCE.getBadtankL().getWidth();
     public static final int HEIGHT = ResourceMgr.INSTANCE.getBadtankL().getHeight();
     public Rectangle rect;
 
+    public Group group;
+    public int x, y;
+    public Dir dir;
+    public boolean alive = true;
+    public boolean moving = true;
+    public Random random = new Random();
+    public FireStrategy fs;
+    public GameModel gm;
+
     public Tank(int x, int y, Dir dir, Group group, GameModel gm) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        super(x, y, dir, group, gm);
-        this.rect = new Rectangle(x, y, WIDTH, HEIGHT);
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.gm = gm;
+        this.group = group;
+        this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+
+        if(this.group == Group.GOOD) {
+            String goodFSName = (String) PropertyMgr.get("goodFS");
+            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
+            constructor.setAccessible(true);
+            fs = constructor.newInstance();
+        } else {
+            String goodFSName = (String) PropertyMgr.get("badFS");
+            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
+            constructor.setAccessible(true);
+            fs = constructor.newInstance();
+        }
     }
 
     public Rectangle getRect() {
@@ -24,7 +51,7 @@ public class Tank extends BaseTank {
 
     public void paint(Graphics g) {
         if(!alive) {
-            gm.enemy.remove(this);
+            gm.remove(this);
             return;
         }
         switch(dir) {

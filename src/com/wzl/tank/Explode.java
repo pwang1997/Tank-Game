@@ -4,7 +4,7 @@ import com.wzl.abstractfactory.BaseExplode;
 
 import java.awt.*;
 
-public class Explode extends BaseExplode {
+public class Explode extends GameObject {
     public static final int WIDTH = ResourceMgr.INSTANCE.getExplodes()[0].getWidth();
 
     public static final int HEIGHT = ResourceMgr.INSTANCE.getExplodes()[0].getHeight();
@@ -26,7 +26,7 @@ public class Explode extends BaseExplode {
     public void paint(Graphics g) {
         if(step < 16) g.drawImage(ResourceMgr.INSTANCE.getExplodes()[step++], x, y, null);
         else {
-            gm.explodes.remove(this);
+            gm.remove(this);
             return;
         }
     }

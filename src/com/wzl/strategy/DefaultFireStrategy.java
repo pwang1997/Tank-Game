@@ -12,16 +12,16 @@ public class DefaultFireStrategy implements FireStrategy {
 
     private DefaultFireStrategy(){};
 
-    public static DefaultFireStrategy getInstance(BaseTank t) {
+    public static DefaultFireStrategy getInstance(Tank t) {
         return INSTANCE;
     }
 
     @Override
-    public void fire(BaseTank t) {
-        int bx = t.getX() + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int by = t.getY() + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+    public void fire(Tank t) {
+        int bx = t.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int by = t.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
-        t.gm.bulletList.add(new Bullet(bx, by, t.getDir(), t.group, t.gm));
+        t.gm.add(new Bullet(bx, by, t.dir, t.group, t.gm));
         if(t.group == Group.GOOD)
             new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
     }
