@@ -6,9 +6,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public class DefaultFactory extends GameFactory{
     @Override
-    public BaseTank createTank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public BaseTank createTank(int x, int y, Dir dir, Group group, GameModel gm) {
         try {
-            return new Tank(x, y, dir, group, tf);
+            return new Tank(x, y, dir, group, gm);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -24,12 +24,12 @@ public class DefaultFactory extends GameFactory{
     }
 
     @Override
-    public BaseBullet createBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
-        return new Bullet(x, y, dir, group, tf);
+    public BaseBullet createBullet(int x, int y, Dir dir, Group group, GameModel gm) {
+        return new Bullet(x, y, dir, group, gm);
     }
 
     @Override
-    public BaseExplode createExplode(int x, int y, TankFrame tf) {
-        return new Explode(x, y, tf);
+    public BaseExplode createExplode(int x, int y, GameModel gm) {
+        return new Explode(x, y, gm);
     }
 }

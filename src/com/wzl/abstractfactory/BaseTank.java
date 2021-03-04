@@ -20,13 +20,14 @@ public abstract class BaseTank {
     public Rectangle rect;
     public Random random = new Random();
     public FireStrategy fs;
+    public GameModel gm;
 
-    public BaseTank(int x, int y, Dir dir, Group group, TankFrame tf) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    public BaseTank(int x, int y, Dir dir, Group group, GameModel gm) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
         this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 

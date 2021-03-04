@@ -16,14 +16,14 @@ public class RectTank extends BaseTank{
 //    public TankFrame tf;
 //    FireStrategy fs;
 
-    public RectTank(int x, int y, Dir dir, Group group, TankFrame tf) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        super(x, y, dir, group, tf);
+    public RectTank(int x, int y, Dir dir, Group group, GameModel gm) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        super(x, y, dir, group, gm);
         this.rect = new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
     public void paint(Graphics g) {
         if(!alive) {
-            tf.enemy.remove(this);
+            gm.enemy.remove(this);
             return;
         }
 

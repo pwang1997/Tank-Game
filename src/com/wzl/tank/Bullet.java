@@ -12,23 +12,23 @@ public class Bullet extends BaseBullet {
 
     private int x, y;
     private Dir dir;
-    private TankFrame tf = null;
+    private GameModel gm = null;
     boolean alive = true;
     Group group;
     Rectangle rect;
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
         this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
 
     public void paint(Graphics g) {
         if(!alive) {
-            tf.bulletList.remove(this);
+            gm.bulletList.remove(this);
             return;
         }
 
@@ -69,7 +69,7 @@ public class Bullet extends BaseBullet {
                 break;
         }
 
-        if(x < 0 || y < 0 || x > tf.GAME_WIDTH || y > tf.GAME_HEIGHT) {
+        if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             alive = false;
         }
     }
@@ -82,7 +82,7 @@ public class Bullet extends BaseBullet {
             this.die();
             int eX = tank.getX() + tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = tank.getY() + tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            tf.explodes.add(tf.rf.createExplode(eX,eY,tf));
+            gm.explodes.add(gm.gf.createExplode(eX,eY,gm));
         }
     }
 

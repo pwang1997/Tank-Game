@@ -9,7 +9,7 @@ public class Main {
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
         // initialize enemy tanks
         for(int i = 0; i < initTankCount; i++) {
-            tf.enemy.add(new Tank(50 + i * 50, 200, Dir.DOWN, Group.BAD, tf));
+            tf.gm.enemy.add(new Tank(50 + i * 50, 200, Dir.DOWN, Group.BAD, tf.gm));
         }
 
         new Thread(() -> new Audio("audio/war1.wav").loop()).start();

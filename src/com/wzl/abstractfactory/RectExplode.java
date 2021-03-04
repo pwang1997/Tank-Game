@@ -1,6 +1,7 @@
 package com.wzl.abstractfactory;
 
 import com.wzl.tank.Audio;
+import com.wzl.tank.GameModel;
 import com.wzl.tank.ResourceMgr;
 import com.wzl.tank.TankFrame;
 
@@ -14,12 +15,12 @@ public class RectExplode extends BaseExplode{
     private int x, y;
     private int step = 0;
     private boolean alive = true;
-    TankFrame tf = null;
+    GameModel gm = null;
 
-    public RectExplode(int x, int y, TankFrame tf) {
+    public RectExplode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
 
         Thread t = new Thread(() -> new Audio("audio/explode.wav").play());
         t.start();
@@ -31,7 +32,7 @@ public class RectExplode extends BaseExplode{
         g.fillRect(x, y, 10*step, 10*step );
         step++;
         if(step >= 5) {
-            tf.explodes.remove(this);
+            gm.explodes.remove(this);
         }
         g.setColor(c);
     }

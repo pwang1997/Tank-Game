@@ -21,7 +21,7 @@ public class FourDirectionFireStrategy implements FireStrategy {
         Dir[] dirs = Dir.values();
         for(Dir dir : dirs) {
 //            t.tf.bulletList.add(new Bullet(bx, by, dir, t.group, t.tf));
-            t.tf.bulletList.add(t.tf.rf.createBullet(bx, by, dir, t.group, t.tf ));
+            t.gm.bulletList.add(t.gm.gf.createBullet(bx, by, dir, t.group, t.gm));
         }
 
         if(t.group == Group.GOOD)

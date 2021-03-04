@@ -12,12 +12,12 @@ public class Explode extends BaseExplode {
     private int x, y;
     private int step = 0;
     private boolean alive = true;
-    TankFrame tf = null;
+    GameModel gm = null;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
 
         Thread t = new Thread(() -> new Audio("audio/explode.wav").play());
         t.start();
@@ -26,7 +26,7 @@ public class Explode extends BaseExplode {
     public void paint(Graphics g) {
         if(step < 16) g.drawImage(ResourceMgr.INSTANCE.getExplodes()[step++], x, y, null);
         else {
-            tf.explodes.remove(this);
+            gm.explodes.remove(this);
             return;
         }
     }

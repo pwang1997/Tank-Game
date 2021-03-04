@@ -12,14 +12,10 @@ public class Tank extends BaseTank {
     public static final int WIDTH = ResourceMgr.INSTANCE.getBadtankL().getWidth();
     public static final int HEIGHT = ResourceMgr.INSTANCE.getBadtankL().getHeight();
     public Rectangle rect;
-//    public TankFrame tf;
-//    FireStrategy fs;
 
-
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        super(x, y, dir, group, tf);
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        super(x, y, dir, group, gm);
         this.rect = new Rectangle(x, y, WIDTH, HEIGHT);
-
     }
 
     public Rectangle getRect() {
@@ -28,7 +24,7 @@ public class Tank extends BaseTank {
 
     public void paint(Graphics g) {
         if(!alive) {
-            tf.enemy.remove(this);
+            gm.enemy.remove(this);
             return;
         }
         switch(dir) {
@@ -91,7 +87,6 @@ public class Tank extends BaseTank {
                 break;
         }
     }
-
 
     public void die() {
         this.alive = false;
