@@ -94,11 +94,13 @@ public class Tank extends GameObject {
     }
 
     private void move() {
+        prevX = x;
+        prevY = y;
+
         if(!moving) {
             return;
         }
-        prevX = x;
-        prevY = y;
+
         switch (dir) {
             case LEFT:
                 x -= SPEED;
@@ -157,6 +159,10 @@ public class Tank extends GameObject {
     }
 
     public void stop() {
+        this.moving = false;
+    }
+
+    public void back() {
         this.x = prevX;
         this.y = prevY;
     }

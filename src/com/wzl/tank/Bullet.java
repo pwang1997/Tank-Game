@@ -1,6 +1,7 @@
 package com.wzl.tank;
 
 import java.awt.*;
+import java.util.BitSet;
 
 public class Bullet extends GameObject {
     private static final int SPEED = Integer.parseInt((String) PropertyMgr.get("bulletSpeed"));
@@ -12,7 +13,7 @@ public class Bullet extends GameObject {
     private GameModel gm = null;
     boolean alive = true;
     Group group;
-    Rectangle rect;
+    public Rectangle rect;
 
     public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
@@ -88,5 +89,9 @@ public class Bullet extends GameObject {
 
     public void die() {
         this.alive = false;
+    }
+
+    public Rectangle getRect() {
+        return this.rect;
     }
 }

@@ -6,4 +6,4 @@ gameWidth=1000
 gameHeight=720
 goodFS=com.wzl.tank.strategy.FourDirectionFireStrategy
 badFS=com.wzl.tank.strategy.DefaultFireStrategy
-colliders=com.wzl.tank.cor.BulletTankCollider,com.wzl.tank.cor.TankTankCollider
+colliders=com.wzl.tank.cor.BulletTankCollider,com.wzl.tank.cor.TankTankCollider,com.wzl.tank.cor.BulletWallCollider,com.wzl.tank.cor.WallTankCollider
