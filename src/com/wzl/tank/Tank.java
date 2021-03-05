@@ -1,7 +1,6 @@
 package com.wzl.tank;
 
-import com.wzl.abstractfactory.BaseTank;
-import com.wzl.strategy.FireStrategy;
+import com.wzl.tank.strategy.FireStrategy;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
@@ -17,6 +16,7 @@ public class Tank extends GameObject {
 
     public Group group;
     public int x, y;
+    int prevX, prevY;
     public Dir dir;
     public boolean alive = true;
     public boolean moving = true;
@@ -97,6 +97,8 @@ public class Tank extends GameObject {
         if(!moving) {
             return;
         }
+        prevX = x;
+        prevY = y;
         switch (dir) {
             case LEFT:
                 x -= SPEED;
@@ -128,5 +130,34 @@ public class Tank extends GameObject {
         if (y < HEIGHT) y = HEIGHT;
         if (TankFrame.GAME_WIDTH - x - Tank.WIDTH < 2) x = TankFrame.GAME_WIDTH - (Tank.WIDTH + 2);
         if (TankFrame.GAME_HEIGHT - Tank.HEIGHT - y < 2) y = TankFrame.GAME_HEIGHT - (Tank.HEIGHT + 2);
+    }
+
+    public Group getGroup() {
+        return this.group;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public Dir getDir() {
+        return this.dir;
+    }
+
+    public void setDir(Dir dir) {
+        this.dir = dir;
+    }
+
+    public void setMoving(boolean b) {
+        this.moving = b;
+    }
+
+    public void stop() {
+        this.x = prevX;
+        this.y = prevY;
     }
 }

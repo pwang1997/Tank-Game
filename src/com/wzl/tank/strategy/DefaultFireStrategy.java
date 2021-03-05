@@ -1,6 +1,5 @@
-package com.wzl.strategy;
+package com.wzl.tank.strategy;
 
-import com.wzl.abstractfactory.BaseTank;
 import com.wzl.tank.Audio;
 import com.wzl.tank.Bullet;
 import com.wzl.tank.Group;

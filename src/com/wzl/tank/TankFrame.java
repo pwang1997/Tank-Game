@@ -1,24 +1,17 @@
 package com.wzl.tank;
 
-import com.wzl.abstractfactory.*;
-
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TankFrame extends Frame{
     GameModel gm = new GameModel();
 
     public static final int GAME_WIDTH = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
     public static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
-
-//    public GameFactory df = new DefaultFactory();
-//    public GameFactory gf = new RectFactory(); // change in bullet/collideWith
 
     public TankFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

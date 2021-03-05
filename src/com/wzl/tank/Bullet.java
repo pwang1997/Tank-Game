@@ -1,8 +1,5 @@
 package com.wzl.tank;
 
-import com.wzl.abstractfactory.BaseBullet;
-import com.wzl.abstractfactory.BaseTank;
-
 import java.awt.*;
 
 public class Bullet extends GameObject {
@@ -74,8 +71,8 @@ public class Bullet extends GameObject {
         }
     }
 
-    public void collideWith(Tank tank) {
-        if(this.group == tank.group) return;
+    public boolean collideWith(Tank tank) {
+        if(this.group == tank.group) return false;
 
         if(this.rect.intersects(tank.getRect())) {
             tank.die();
@@ -83,7 +80,10 @@ public class Bullet extends GameObject {
             int eX = tank.x + tank.WIDTH / 2 - Explode.WIDTH / 2;
             int eY = tank.y + tank.HEIGHT / 2 - Explode.HEIGHT / 2;
             gm.add(new Explode(eX,eY,gm));
+            return true;
         }
+
+        return false;
     }
 
     public void die() {

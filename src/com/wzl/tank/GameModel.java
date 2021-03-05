@@ -1,6 +1,9 @@
 package com.wzl.tank;
 
-import com.wzl.abstractfactory.*;
+import com.wzl.tank.cor.BulletTankCollider;
+import com.wzl.tank.cor.Collider;
+import com.wzl.tank.cor.ColliderChain;
+import com.wzl.tank.cor.TankTankCollider;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -9,13 +12,9 @@ import java.util.List;
 
 public class GameModel {
 
-
-//    public List<Tank> enemy = new ArrayList<>();
-//    public List<Bullet> bulletList = new ArrayList<>();
-//    public List<Explode> explodes = new ArrayList<>();
-
     private List<GameObject> objects = new ArrayList<>();
-//    public GameFactory gf = new RectFactory(); // change in bullet/collideWith
+
+    ColliderChain chain = new ColliderChain();
 
     Tank myTank = new Tank(TankFrame.GAME_WIDTH / 2, TankFrame.GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD, this);
 
@@ -23,7 +22,7 @@ public class GameModel {
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
         // initialize enemy tanks
         for(int i = 0; i < initTankCount; i++) {
-            this.objects.add(new Tank(50 + i * 50, 200, Dir.DOWN, Group.BAD, this));
+            this.objects.add(new Tank(50 + i * 100, 200, Dir.DOWN, Group.BAD, this));
         }
     }
 
@@ -36,16 +35,18 @@ public class GameModel {
     }
 
     public void paint(Graphics g){
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-//        g.drawString("Bullet Count: " + bulletList.size() +
-//                "\nEnemy Count: " + enemy.size(), 10, 60);
-        g.setColor(c);
-
         myTank.paint(g);
 
         for(int i = 0; i < objects.size(); i++) {
             objects.get(i).paint(g);
+        }
+
+        for(int i = 0; i < objects.size(); i++) {
+            for(int j = i+1; j < objects.size(); j++) {
+                GameObject o1 = objects.get(i);
+                GameObject o2 = objects.get(j);
+                chain.collide(o1, o2);
+            }
         }
 
 //        for(int i = 0; i < bulletList.size(); i++) {

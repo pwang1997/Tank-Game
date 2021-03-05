@@ -1,7 +1,5 @@
 package com.wzl.tank;
 
-import com.wzl.abstractfactory.BaseExplode;
-
 import java.awt.*;
 
 public class Explode extends GameObject {
