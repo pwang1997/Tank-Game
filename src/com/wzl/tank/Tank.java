@@ -1,6 +1,8 @@
 package com.wzl.tank;
 
+import com.wzl.tank.strategy.DefaultFireStrategy;
 import com.wzl.tank.strategy.FireStrategy;
+import com.wzl.tank.strategy.FourDirectionFireStrategy;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
@@ -22,27 +24,20 @@ public class Tank extends GameObject {
     public boolean moving = true;
     public Random random = new Random();
     public FireStrategy fs;
-    public GameModel gm;
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm = gm;
         this.group = group;
         this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 
         if(this.group == Group.GOOD) {
-            String goodFSName = (String) PropertyMgr.get("goodFS");
-            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
-            constructor.setAccessible(true);
-            fs = constructor.newInstance();
+            fs = FourDirectionFireStrategy.getInstance(this);
         } else {
-            String goodFSName = (String) PropertyMgr.get("badFS");
-            Constructor<FireStrategy> constructor = (Constructor<FireStrategy>) Class.forName(goodFSName).getDeclaredConstructor();
-            constructor.setAccessible(true);
-            fs = constructor.newInstance();
+            fs = DefaultFireStrategy.getInstance(this);
         }
+        GameModel.getInstance().add(this);
     }
 
     public Rectangle getRect() {
@@ -51,7 +46,7 @@ public class Tank extends GameObject {
 
     public void paint(Graphics g) {
         if(!alive) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return;
         }
         switch(dir) {

@@ -20,7 +20,7 @@ public class FourDirectionFireStrategy implements FireStrategy {
         Dir[] dirs = Dir.values();
         for(Dir dir : dirs) {
 //            t.tf.bulletList.add(new Bullet(bx, by, dir, t.group, t.tf));
-            t.gm.add(new Bullet(bx, by, dir, t.group, t.gm));
+            GameModel.getInstance().add(new Bullet(bx, by, dir, t.group));
         }
 
         if(t.group == Group.GOOD)

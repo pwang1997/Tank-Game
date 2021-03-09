@@ -1,9 +1,6 @@
 package com.wzl.tank.strategy;
 
-import com.wzl.tank.Audio;
-import com.wzl.tank.Bullet;
-import com.wzl.tank.Group;
-import com.wzl.tank.Tank;
+import com.wzl.tank.*;
 
 public class DefaultFireStrategy implements FireStrategy {
 
@@ -20,7 +17,7 @@ public class DefaultFireStrategy implements FireStrategy {
         int bx = t.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = t.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
-        t.gm.add(new Bullet(bx, by, t.dir, t.group, t.gm));
+        GameModel.getInstance().add(new Bullet(bx, by, t.dir, t.group));
         if(t.group == Group.GOOD)
             new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
     }

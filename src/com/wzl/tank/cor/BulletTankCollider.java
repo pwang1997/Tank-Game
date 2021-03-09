@@ -1,8 +1,6 @@
 package com.wzl.tank.cor;
 
-import com.wzl.tank.Bullet;
-import com.wzl.tank.GameObject;
-import com.wzl.tank.Tank;
+import com.wzl.tank.*;
 
 public class BulletTankCollider implements Collider{
 
@@ -11,15 +9,19 @@ public class BulletTankCollider implements Collider{
         if (o1 instanceof Bullet && o2 instanceof Tank) {
             Bullet b = (Bullet) o1;
             Tank t = (Tank) o2;
-            b.collideWith(t);
-            return false;
+            if(b.group == t.group) return true;
+
+            if(b.getRect().intersects(t.getRect())) {
+                t.die();
+                b.die();
+                int eX = t.x + t.WIDTH / 2 - Explode.WIDTH / 2;
+                int eY = t.y + t.HEIGHT / 2 - Explode.HEIGHT / 2;
+                GameModel.getInstance().add(new Explode(eX,eY));
+                return false;
+            }
         } else if(o1 instanceof Tank && o2 instanceof Bullet) {
-            Bullet b = (Bullet) o2;
-            Tank t = (Tank) o1;
-            b.collideWith(t);
-            return false;
-        } else {
-            return true;
+            return collide(o2, o1);
         }
+            return true;
     }
 }

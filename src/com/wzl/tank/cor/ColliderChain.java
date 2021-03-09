@@ -14,12 +14,27 @@ public class ColliderChain implements Collider{
 
     private List<Collider> colliderList = new LinkedList<>();
 
-    public ColliderChain() throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
+    public ColliderChain() {
         String[] colliders = ((String) PropertyMgr.get("colliders")).split(",");
         for(String collider : colliders) {
-            Constructor<Collider> constructor = (Constructor<Collider>) Class.forName(collider).getDeclaredConstructor();
+            Constructor<Collider> constructor = null;
+            try {
+                constructor = (Constructor<Collider>) Class.forName(collider).getDeclaredConstructor();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             constructor.setAccessible(true);
-            add(constructor.newInstance());
+            try {
+                add(constructor.newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
     }
 

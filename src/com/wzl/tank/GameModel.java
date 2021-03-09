@@ -10,19 +10,33 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel {
+public class GameModel{
+
+    private static final GameModel INSTANCE = new GameModel();
 
     private List<GameObject> objects = new ArrayList<>();
 
     ColliderChain chain = new ColliderChain();
 
-    Tank myTank = new Tank(TankFrame.GAME_WIDTH / 2, TankFrame.GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD, this);
+    static {
+        INSTANCE.init();
+    }
 
-    public GameModel() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    Tank myTank;
+
+    public static GameModel getInstance() {
+        return INSTANCE;
+    }
+
+    public GameModel() { }
+
+    private void init() {
+        myTank = new Tank(TankFrame.GAME_WIDTH / 2, TankFrame.GAME_HEIGHT / 2, Dir.DOWN, Group.GOOD);
+
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
         // initialize enemy tanks
         for(int i = 0; i < initTankCount; i++) {
-            this.objects.add(new Tank(50 + i * 100, 200, Dir.DOWN, Group.BAD, this));
+            new Tank(50 + i * 100, 200, Dir.DOWN, Group.BAD);
         }
 
         add(new Wall(150, 150, 200, 50));
