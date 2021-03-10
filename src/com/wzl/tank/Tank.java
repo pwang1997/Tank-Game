@@ -17,7 +17,6 @@ public class Tank extends GameObject {
     public Rectangle rect;
 
     public Group group;
-    public int x, y;
     int prevX, prevY;
     public Dir dir;
     public boolean alive = true;
@@ -82,6 +81,16 @@ public class Tank extends GameObject {
         rect.x = this.x;
         rect.y = this.y;
 
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     public void fire() {

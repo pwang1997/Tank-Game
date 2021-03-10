@@ -8,7 +8,6 @@ public class Bullet extends GameObject {
     public static final int HEIGHT = ResourceMgr.INSTANCE.getBulletD().getHeight();
     public static final int WIDTH = ResourceMgr.INSTANCE.getBulletD().getWidth();
 
-    private int x, y;
     private Dir dir;
     boolean alive = true;
     public Group group;
@@ -46,6 +45,16 @@ public class Bullet extends GameObject {
         move();
         rect.x = this.x;
         rect.y = this.y;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     public void move() {

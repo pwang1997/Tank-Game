@@ -7,6 +7,16 @@ public class Wall extends GameObject{
     public int w,h;
     public Rectangle rect;
 
+    @Override
+    public int getWidth() {
+        return w;
+    }
+
+    @Override
+    public int getHeight() {
+        return h;
+    }
+
     public Wall(int x, int y, int w, int h) {
         this.x = x;
         this.y = y;
