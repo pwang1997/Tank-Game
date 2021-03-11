@@ -13,7 +13,7 @@ public class TankFrame extends Frame{
     public static final int GAME_WIDTH = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
     public static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
 
-    public TankFrame() throws IllegalAccessException, InstantiationException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
+    public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("Tank war");
@@ -102,7 +102,7 @@ public class TankFrame extends Frame{
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    GameModel.getInstance().getMainTank().fire();
+                    GameModel.getInstance().getMainTank().handleFireKey();
                     break;
                 default:
                     break;

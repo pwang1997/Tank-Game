@@ -1,13 +1,17 @@
 package com.wzl.tank;
 
+import com.wzl.tank.observer.TankFireEvent;
+import com.wzl.tank.observer.TankFireHandler;
+import com.wzl.tank.observer.Observer;
 import com.wzl.tank.strategy.DefaultFireStrategy;
 import com.wzl.tank.strategy.FireStrategy;
 import com.wzl.tank.strategy.FourDirectionFireStrategy;
 
-import java.awt.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.awt.*;
 
 public class Tank extends GameObject {
 
@@ -36,7 +40,9 @@ public class Tank extends GameObject {
         } else {
             fs = DefaultFireStrategy.getInstance(this);
         }
-        GameModel.getInstance().add(this);
+        if (this.group == Group.BAD) {
+            GameModel.getInstance().add(this);
+        }
     }
 
     public Rectangle getRect() {
@@ -94,7 +100,7 @@ public class Tank extends GameObject {
     }
 
     public void fire() {
-        fs.fire(this);
+         fs.fire(this);
     }
 
     private void move() {
@@ -169,5 +175,13 @@ public class Tank extends GameObject {
     public void back() {
         this.x = prevX;
         this.y = prevY;
+    }
+
+    private List<TankFireHandler> fireObservers = Arrays.asList(new TankFireHandler());
+    public void handleFireKey() {
+        TankFireEvent event = new TankFireEvent(this);
+        for(TankFireHandler o: fireObservers) {
+            o.actionOnFire(event);
+        }
     }
 }
