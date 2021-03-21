@@ -177,7 +177,7 @@ public class Tank extends GameObject {
         this.y = prevY;
     }
 
-    private List<TankFireHandler> fireObservers = Arrays.asList(new TankFireHandler());
+    private transient List<TankFireHandler> fireObservers = Arrays.asList(new TankFireHandler());
     public void handleFireKey() {
         TankFireEvent event = new TankFireEvent(this);
         for(TankFireHandler o: fireObservers) {

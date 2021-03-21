@@ -2,6 +2,8 @@ package com.wzl.tank.strategy;
 
 import com.wzl.tank.Tank;
 
-public interface FireStrategy {
+import java.io.Serializable;
+
+public interface FireStrategy extends Serializable {
     void fire(Tank t);
 }

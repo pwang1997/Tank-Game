@@ -1,5 +1,7 @@
 package com.wzl.tank.observer;
 
-public interface Observer {
+import java.io.Serializable;
+
+public interface Observer extends Serializable {
     void actionOnFire(TankFireEvent event);
 }
