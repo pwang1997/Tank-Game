@@ -1,16 +1,10 @@
 package com.wzl.tank.netty;
 
 import com.wzl.tank.GameModel;
-import com.wzl.tank.Tank;
-import com.wzl.tank.TankFrame;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.ReferenceCountUtil;
 
 public class Client {
     public static final Client INSTANCE = new Client();
@@ -55,8 +49,8 @@ public class Client {
 class ClientChannelInitializer extends ChannelInitializer {
     protected void initChannel(Channel channel) throws Exception {
         channel.pipeline()
-                .addLast(new TankJoinMsgEncoder())
-                .addLast(new TankJoinMsgDecoder())
+                .addLast(new TankMsgEncoder())
+                .addLast(new TankMsgDecoder())
                 .addLast(new ClientHandler());
     }
 }
@@ -65,7 +59,6 @@ class ClientHandler extends SimpleChannelInboundHandler<Msg> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Msg msg) throws Exception {
         msg.handle();
-        System.out.println(msg.toString());
     }
 
     @Override

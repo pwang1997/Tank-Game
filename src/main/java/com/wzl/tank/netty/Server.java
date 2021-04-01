@@ -32,7 +32,7 @@ public class Server {
                             pipeline.addLast(new ServerChildHandler());
                         }
                     })
-                    .bind(8888)
+                    .bind(8889)
                     .sync()
                     .channel().closeFuture().sync();
 
@@ -51,7 +51,7 @@ class ServerChildHandler extends ChannelInboundHandlerAdapter{
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         Server.clients.writeAndFlush(msg);
-
+        System.out.println(msg);
     }
 
     @Override

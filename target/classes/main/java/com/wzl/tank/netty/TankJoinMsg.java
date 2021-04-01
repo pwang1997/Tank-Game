@@ -9,12 +9,6 @@ import java.io.*;
 import java.util.UUID;
 
 public class TankJoinMsg extends Msg{
-    public int x, y;
-    public Dir dir;
-    public boolean moving;
-    public Group group;
-    public UUID id;
-
     public TankJoinMsg(Tank t) {
         this.x = t.x;
         this.y = t.y;
@@ -135,10 +129,10 @@ public class TankJoinMsg extends Msg{
         if(this.id.equals(GameModel.getInstance().getMainTank().getId())
                 || GameModel.getInstance().findByUUID(this.id) != null) return;
 
-        System.out.println(this.toString());
         Tank t = new Tank(this);
         GameModel.getInstance().add(t);
 
         Client.INSTANCE.send(new TankJoinMsg(GameModel.getInstance().getMainTank()));
+        System.out.println(this.toString());
     }
 }

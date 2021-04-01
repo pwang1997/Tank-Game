@@ -4,8 +4,8 @@ import com.wzl.tank.Dir;
 import com.wzl.tank.Group;
 import com.wzl.tank.netty.MsgType;
 import com.wzl.tank.netty.TankJoinMsg;
-import com.wzl.tank.netty.TankJoinMsgDecoder;
-import com.wzl.tank.netty.TankJoinMsgEncoder;
+import com.wzl.tank.netty.TankMsgDecoder;
+import com.wzl.tank.netty.TankMsgEncoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.embedded.EmbeddedChannel;
@@ -25,7 +25,7 @@ public class TankJoinMsgTest {
         TankJoinMsg msg = new TankJoinMsg(5, 10, Dir.DOWN, true, Group.BAD
         ,id);
         ch.pipeline()
-                .addLast(new TankJoinMsgEncoder());
+                .addLast(new TankMsgEncoder());
 
         ch.writeOutbound(msg);
 
@@ -62,7 +62,7 @@ public class TankJoinMsgTest {
         TankJoinMsg msg = new TankJoinMsg(5, 10, Dir.DOWN, true, Group.BAD
                 ,id);
         ch.pipeline()
-                .addLast(new TankJoinMsgDecoder());
+                .addLast(new TankMsgDecoder());
 
         ByteBuf buf = Unpooled.buffer();
         buf.writeInt(MsgType.TankJoin.ordinal());

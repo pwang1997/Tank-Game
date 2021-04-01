@@ -1,5 +1,8 @@
 package com.wzl.tank;
 
+import com.wzl.tank.netty.Client;
+import com.wzl.tank.netty.TankStartMovingMsg;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -125,6 +128,9 @@ public class TankFrame extends Frame{
                 if(bR) GameModel.getInstance().getMainTank().setDir(Dir.RIGHT);
                 if(bU) GameModel.getInstance().getMainTank().setDir(Dir.UP);
                 if(bD) GameModel.getInstance().getMainTank().setDir(Dir.DOWN);
+                Client.INSTANCE.send(new TankStartMovingMsg(
+                        GameModel.getInstance().getMainTank()
+                ));
             }
         }
     }

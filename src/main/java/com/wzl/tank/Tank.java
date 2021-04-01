@@ -1,5 +1,7 @@
 package com.wzl.tank;
 
+import com.wzl.tank.netty.Msg;
+import com.wzl.tank.netty.MsgType;
 import com.wzl.tank.netty.TankJoinMsg;
 import com.wzl.tank.observer.TankFireEvent;
 import com.wzl.tank.observer.TankFireHandler;
@@ -32,7 +34,7 @@ public class Tank extends GameObject {
         return id;
     }
 
-    public Tank(TankJoinMsg msg) {
+    public Tank(Msg msg) {
         this(msg.x, msg.y, msg.dir, msg.group, msg.id);
     }
     public Tank(int x, int y, Dir dir, Group group, UUID id) {
@@ -42,14 +44,14 @@ public class Tank extends GameObject {
         this.group = group;
         this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
         this.id = id;
-        if(this.group == Group.GOOD) {
-            fs = FourDirectionFireStrategy.getInstance(this);
-        } else {
+//        if(this.group == Group.GOOD) {
+//            fs = FourDirectionFireStrategy.getInstance(this);
+//        } else {
             fs = DefaultFireStrategy.getInstance(this);
-        }
-        if (this.group == Group.BAD) {
-            GameModel.getInstance().add(this);
-        }
+//        }
+//        if (this.group == Group.BAD) {
+//            GameModel.getInstance().add(this);
+//        }
     }
 
     public Rectangle getRect() {
@@ -163,6 +165,9 @@ public class Tank extends GameObject {
         return this.y;
     }
 
+    public void setX(int x) {this.x = x;}
+
+    public void setY(int y) {this.y = y;}
     public Dir getDir() {
         return this.dir;
     }
