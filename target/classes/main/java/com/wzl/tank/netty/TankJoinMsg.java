@@ -134,6 +134,6 @@ public class TankJoinMsg extends Msg{
         Tank t = new Tank(this);
         GameModel.getInstance().add(t);
 
-//        Client.INSTANCE.send(new TankJoinMsg(GameModel.getInstance().getMainTank()));
+        Client.INSTANCE.send(new TankJoinMsg(GameModel.getInstance().getMainTank()));
     }
 }

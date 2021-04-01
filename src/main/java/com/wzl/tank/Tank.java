@@ -26,22 +26,22 @@ public class Tank extends GameObject {
     public boolean moving = false;
     public Random random = new Random();
     public FireStrategy fs;
-    public UUID id = UUID.randomUUID();
+    public UUID id = null;
 
     public UUID getId() {
         return id;
     }
 
     public Tank(TankJoinMsg msg) {
-        this(msg.x, msg.y, msg.dir, msg.group);
+        this(msg.x, msg.y, msg.dir, msg.group, msg.id);
     }
-    public Tank(int x, int y, Dir dir, Group group) {
+    public Tank(int x, int y, Dir dir, Group group, UUID id) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
         this.rect = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-
+        this.id = id;
         if(this.group == Group.GOOD) {
             fs = FourDirectionFireStrategy.getInstance(this);
         } else {

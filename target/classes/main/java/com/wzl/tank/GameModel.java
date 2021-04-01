@@ -38,7 +38,8 @@ public class GameModel{
         myTank = new Tank((int)(TankFrame.GAME_WIDTH * Math.random()),
                 (int)(TankFrame.GAME_HEIGHT * Math.random()),
                 Dir.values()[(int)(Math.random() * 4)],
-                Group.values()[(int)(Math.random()*2)]);
+                Group.values()[(int)(Math.random()*2)],
+                UUID.randomUUID());
         map.put(myTank.getId(), myTank);
 //        int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
         // initialize enemy tanks
@@ -57,6 +58,7 @@ public class GameModel{
 //        this.objects.add(go);
         if(go instanceof Tank) {
             map.put(((Tank) go).getId(), (Tank) go);
+            System.out.println(((Tank) go).getId());
         }
     }
 
