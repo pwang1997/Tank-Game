@@ -61,6 +61,11 @@ public class TankJoinMsg extends Msg{
     }
 
     @Override
+    public MsgType getMsgType() {
+        return MsgType.TankJoin;
+    }
+
+    @Override
     public String toString() {
         return "TankJoinMsg{" +
                 "x=" + x +

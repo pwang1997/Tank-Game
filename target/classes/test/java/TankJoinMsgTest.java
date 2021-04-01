@@ -2,7 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.wzl.tank.Dir;
 import com.wzl.tank.Group;
-import com.wzl.tank.Tank;
+import com.wzl.tank.netty.MsgType;
 import com.wzl.tank.netty.TankJoinMsg;
 import com.wzl.tank.netty.TankJoinMsgDecoder;
 import com.wzl.tank.netty.TankJoinMsgEncoder;
@@ -30,6 +30,11 @@ public class TankJoinMsgTest {
         ch.writeOutbound(msg);
 
         ByteBuf buf = (ByteBuf) ch.readOutbound();
+        MsgType msgType = MsgType.values()[buf.readInt()];
+        assertEquals(MsgType.TankJoin, msgType);
+
+        int length = buf.readInt();
+        assertEquals(33, length);
 
         int x = buf.readInt();
         int y = buf.readInt();
@@ -60,9 +65,13 @@ public class TankJoinMsgTest {
                 .addLast(new TankJoinMsgDecoder());
 
         ByteBuf buf = Unpooled.buffer();
-        buf.writeBytes(msg.toBytes());
+        buf.writeInt(MsgType.TankJoin.ordinal());
+        byte[] bytes = msg.toBytes();
+        buf.writeInt(bytes.length);
+        buf.writeBytes(bytes);
         ch.writeInbound(buf.duplicate());
         TankJoinMsg msgR = (TankJoinMsg) ch.readInbound();
+
 
         assertEquals(5, msgR.x);
         assertEquals(10, msgR.y);

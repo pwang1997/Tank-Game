@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class TankJoinMsgDecoder extends ByteToMessageDecoder {
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
         /**
          * x, y, dir, group: 4bytes
          * moving: 1 byte
@@ -22,16 +22,29 @@ public class TankJoinMsgDecoder extends ByteToMessageDecoder {
          * out.writeInt(dataLength);  // data length
          * out.writeBytes(data);      // data
          */
-        if(byteBuf.readableBytes() < 33) return; // TCP 拆包 粘包
+        if(in.readableBytes() < 8) return; // TCP 拆包 粘包
 
-        TankJoinMsg msg = new TankJoinMsg();
-        msg.x = byteBuf.readInt();
-        msg.y = byteBuf.readInt();
-        msg.dir = Dir.values()[byteBuf.readInt()];
-        msg.moving = byteBuf.readBoolean();
-        msg.group = Group.values()[byteBuf.readInt()];
-        msg.id = new UUID(byteBuf.readLong(), byteBuf.readLong());
+        in.markReaderIndex();
 
-        list.add(msg);
+        MsgType msgType = MsgType.values()[in.readInt()];
+        int length = in.readInt();
+
+        if(in.readableBytes() < length) {
+            in.resetReaderIndex();
+            return;
+        }
+
+        byte[] bytes = new byte[length];
+        in.readBytes(bytes);
+        switch(msgType) {
+            case TankJoin:
+                TankJoinMsg msg = new TankJoinMsg();
+                msg.parse(bytes);
+                out.add(msg);
+                break;
+            default:
+                break;
+        }
+
     }
 }
