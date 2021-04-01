@@ -9,26 +9,20 @@ import java.io.*;
 import java.util.UUID;
 
 public class TankJoinMsg extends Msg{
+    public TankJoinMsg() {
+    }
+
     public TankJoinMsg(Tank t) {
-        this.x = t.x;
-        this.y = t.y;
-        this.dir = t.dir;
-        this.moving = t.moving;
-        this.group = t.group;
-        this.id = t.id;
+        this(t.x, t.y, t.dir, t.moving, t.group, t.id);
     }
 
     public TankJoinMsg(int x, int y, Dir dir, boolean moving, Group group, UUID id) {
-        super();
+        this.id = id;
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.moving = moving;
+        this.moving = false;
         this.group = group;
-        this.id = id;
-    }
-
-    public TankJoinMsg() {
     }
 
     public void parse(byte[] bytes) {

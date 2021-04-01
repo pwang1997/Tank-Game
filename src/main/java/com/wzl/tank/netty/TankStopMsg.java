@@ -2,52 +2,34 @@ package com.wzl.tank.netty;
 
 import com.wzl.tank.Dir;
 import com.wzl.tank.GameModel;
-import com.wzl.tank.Group;
 import com.wzl.tank.Tank;
 
 import java.io.*;
 import java.util.UUID;
 
-public class TankStartMovingMsg extends Msg{
-    public TankStartMovingMsg() { }
+public class TankStopMsg extends Msg{
+    public TankStopMsg() {}
 
-    public TankStartMovingMsg(Tank t) {
-        this.id = t.id;
-        this.x = t.x;
-        this.y = t.y;
-        this.dir = t.dir;
-        this.moving = true;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
+    public TankStopMsg(UUID id, int x, int y) {
+        this.id = id;
         this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
         this.y = y;
     }
 
-
+    public TankStopMsg(Tank t) {
+        this(t.id, t.x, t.y);
+    }
     @Override
     public void handle() {
-        if(this.id.equals(GameModel.getInstance().getMainTank().getId())) return;
+        if(this.id.equals(GameModel.getInstance().getMainTank().getId()))
+            return;
 
-        System.out.println(this.toString());
         Tank t = GameModel.getInstance().findByUUID(this.id);
 
         if(t != null) {
-            t.setMoving(true);
-            t.setX(this.x);
-            t.setY(this.y);
-            t.setDir(this.dir);
+            t.setMoving(false);
+            t.x = this.x;
+            t.y = this.y;
         }
     }
 
@@ -63,7 +45,6 @@ public class TankStartMovingMsg extends Msg{
 
             dos.writeInt(x);
             dos.writeInt(y);
-            dos.writeInt(dir.ordinal());
             dos.writeBoolean(moving); //2 bytes
             dos.writeLong(id.getMostSignificantBits());
             dos.writeLong(id.getLeastSignificantBits());
@@ -98,7 +79,6 @@ public class TankStartMovingMsg extends Msg{
         try {
             this.x = dis.readInt();
             this.y = dis.readInt();
-            this.dir = Dir.values()[dis.readInt()];
             this.moving = dis.readBoolean();
             this.id = new UUID(dis.readLong(), dis.readLong());
         } catch (IOException e) {
@@ -114,6 +94,6 @@ public class TankStartMovingMsg extends Msg{
 
     @Override
     public MsgType getMsgType() {
-        return MsgType.TankStartMoving;
+        return MsgType.TankStop;
     }
 }

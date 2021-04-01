@@ -22,6 +22,5 @@ public class Main {
         }).start();
 
         Client.INSTANCE.connect();
-
     }
 }

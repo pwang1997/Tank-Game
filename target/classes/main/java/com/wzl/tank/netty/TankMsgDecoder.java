@@ -37,19 +37,26 @@ public class TankMsgDecoder extends ByteToMessageDecoder {
         byte[] bytes = new byte[length];
         in.readBytes(bytes);
         Msg msg = null;
-        switch(msgType) {
-            case TankJoin:
-                msg = new TankJoinMsg();
-                msg.parse(bytes);
-                out.add(msg);
-                break;
+        // reflection
+        msg = (Msg) Class.forName("com.wzl.tank.netty." + msgType.toString() + "Msg").getConstructor()
+                .newInstance();
+//        switch(msgType) {
+//            case TankJoin:
+//                msg = new TankJoinMsg();
+//                break;
 //            case TankStartMoving:
 //                msg = new TankStartMovingMsg();
-//                msg.parse(bytes);
-//                out.add(msg);
 //                break;
-            default:
-                break;
+//            case TankStop:
+//                msg = new TankStopMsg();
+//                break;
+//            default:
+//                break;
+//        }
+
+        if(msg != null) {
+            msg.parse(bytes);
+            out.add(msg);
         }
 
     }

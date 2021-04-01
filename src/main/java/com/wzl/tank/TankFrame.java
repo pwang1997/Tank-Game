@@ -2,6 +2,7 @@ package com.wzl.tank;
 
 import com.wzl.tank.netty.Client;
 import com.wzl.tank.netty.TankStartMovingMsg;
+import com.wzl.tank.netty.TankStopMsg;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -121,6 +122,9 @@ public class TankFrame extends Frame{
         private void setMainTankDir() {
             if(!bL && !bR && !bD && !bU) {
                 GameModel.getInstance().getMainTank().setMoving(false);
+                Client.INSTANCE.send(new TankStopMsg(
+                        GameModel.getInstance().getMainTank()
+                ));
             } else {
                 GameModel.getInstance().getMainTank().setMoving(true);
 

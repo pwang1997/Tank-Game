@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.UUID;
 
 public class TankStartMovingMsg extends Msg{
-    public TankStartMovingMsg() {}
+    public TankStartMovingMsg() { }
 
     public TankStartMovingMsg(Tank t) {
         this.id = t.id;
@@ -17,7 +17,6 @@ public class TankStartMovingMsg extends Msg{
         this.y = t.y;
         this.dir = t.dir;
         this.moving = true;
-        this.group = t.group;
     }
 
     public int getX() {
@@ -66,7 +65,6 @@ public class TankStartMovingMsg extends Msg{
             dos.writeInt(y);
             dos.writeInt(dir.ordinal());
             dos.writeBoolean(moving); //2 bytes
-            dos.writeInt(group.ordinal());
             dos.writeLong(id.getMostSignificantBits());
             dos.writeLong(id.getLeastSignificantBits());
             dos.flush();
@@ -102,7 +100,6 @@ public class TankStartMovingMsg extends Msg{
             this.y = dis.readInt();
             this.dir = Dir.values()[dis.readInt()];
             this.moving = dis.readBoolean();
-            this.group = Group.values()[dis.readInt()];
             this.id = new UUID(dis.readLong(), dis.readLong());
         } catch (IOException e) {
             e.printStackTrace();
