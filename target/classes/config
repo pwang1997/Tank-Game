@@ -1,0 +1,9 @@
+#tanks count at initialization
+initTankCount=10
+tankSpeed=5
+bulletSpeed=10
+gameWidth=1000
+gameHeight=720
+goodFS=com.wzl.tank.strategy.FourDirectionFireStrategy
+badFS=com.wzl.tank.strategy.DefaultFireStrategy
+colliders=com.wzl.tank.cor.BulletTankCollider,com.wzl.tank.cor.TankTankCollider,com.wzl.tank.cor.BulletWallCollider,com.wzl.tank.cor.WallTankCollider
